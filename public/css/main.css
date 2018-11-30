@@ -42,9 +42,19 @@ body {
   overflow: hidden;
 }
 
-.monitor-container {
+.monitor-container{
   width: calc(100% - 230px);
   height: calc(100% - 170px);
+}
+
+.cover {
+  position: fixed;
+  background-color: lime;
+  z-index: 100;
+  opacity: 0.1;
+  overflow: hidden;
+  width: 480px;
+  height: 360px;
 }
 
 #output-view {
@@ -65,4 +75,22 @@ padding: 1em;
 #select-view {
   padding: 10px 0px;
   border-top: 1px dashed;
+}
+
+#select-view p, h3, h4 {
+  margin: 0px;
+  color: yellow;
+  display: inline;
+}
+
+#select-view p {
+  padding: 1em;
+}
+
+.on {
+  color: yellow;
+}
+
+.off {
+  color: black;
 }

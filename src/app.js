@@ -10,8 +10,8 @@ const startApp = () => {
   const headerView = new HeaderView(headerElement);
   headerView.bindEvents();
 
-  const selectButton = document.querySelector('#select-form')
-  const selectView = new SelectView(selectButton);
+  const selectTextElement = document.querySelector('#select-text')
+  const selectView = new SelectView(selectTextElement);
   selectView.bindEvents();
 
   const outputElement = document.querySelector('#output-view')

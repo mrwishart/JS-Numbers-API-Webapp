@@ -1,17 +1,64 @@
 const PubSub = require('../helpers/pub_sub.js');
 
-const SelectView = function (element) {
-  this.element = element;
+const SelectView = function (container) {
+  this.container = container;
 }
 
 SelectView.prototype.bindEvents = function () {
-  this.element.addEventListener('submit', this.submitNumber);
+  document.addEventListener('keydown', (event) => {
+
+    const enteredChar = event.key;
+    this.processKey(enteredChar);
+  });
+
+  const switchFlicker = function () {
+    const switchObject = {off: 'on', on: 'off'};
+    const flicker = document.querySelector('#flicker');
+
+    const oldClass = flicker.classList.value;
+    const newClass = switchObject[oldClass];
+
+    flicker.classList.remove(oldClass);
+    flicker.classList.add(newClass);
+
+    window.setTimeout(switchFlicker, 500);
+
+  };
+
+  window.setTimeout(switchFlicker, 500);
 };
 
-SelectView.prototype.submitNumber = (event) => {
-  event.preventDefault();
-  const requestedNumber = event.target[0].value;
-  PubSub.publish( "NumberInfo:NeedToQueryAPI" ,requestedNumber)
+SelectView.prototype.processKey = function (char) {
+  if (char === "Enter") {
+    PubSub.publish( "NumberInfo:NeedToQueryAPI",this.container.textContent);
+    this.container.textContent = '';
+  } else if (char === "Backspace") {
+    this.container.textContent = this.backspace();
+  } else if (!isNaN(char)) {
+    this.container.textContent += char;
+  } else {
+    return;
+  }
 };
+
+SelectView.prototype.backspace = function () {
+  return this.container.textContent.slice(0, -1);
+};
+
+// SelectView.prototype.switchFlicker = function () {
+//
+//   const switchObject = {off: 'on', on: 'off'};
+//
+//   const flicker = document.querySelector('#flicker');
+//
+//   const oldClass = flicker.classList.value;
+//   const newClass = switchObject[oldClass];
+//
+//   flicker.classList.remove(oldClass);
+//   flicker.classList.add(newClass);
+//
+//   console.log(this);
+//   window.setTimeout(switchFlicker, 500);
+// };
 
 module.exports = SelectView;

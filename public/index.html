@@ -8,13 +8,15 @@
 </head>
 <body>
   <div class="monitor-container">
+    <div class="cover"></div>
     <div id="system-view"></div>
     <header id="header-view"></header>
     <nav id="select-view">
-    <form id="select-form">
-      Pick a Number: <input type="number" id="select-input"min=0>
-      <input type="submit" name="" value="Submit">
-    </form>
+    <div id="select-form">
+      <p>Pick a Number: </p><h4 id="select-text"></h4><h3 id='flicker' class='on'>_</h3>
+      <!-- <input type="number" id="select-input"min=0>
+      <input type="submit" name="" value="Submit"> -->
+    </div>
     </nav>
     <section id="output-view"></section>
   </div>
