@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="css/main.css">
-    <script src="js/bundle.js"></script>
-    <title>num.isFun?() === true;</title>
-  </head>
-  <body>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="js/bundle.js"></script>
+  <title>num.isFun?() === true;</title>
+</head>
+<body>
+  <div class="monitor-container">
     <div id="system-view"></div>
-    <header id="header-view"><h1>Numbers === Fun:</h1></header>
-    <nav id="select-view"></nav>
+    <header id="header-view">
+      <h1>Numbers === Fun</h1></header>
+    <nav id="select-view">
+    <form id="select-form">
+      Pick a Number: <input type="number" id="select-input"min=0>
+      <input type="submit" name="" value="Submit">
+    </form>
+    </nav>
     <section id="output-view"></section>
-  </body>
+  </div>
+</body>
 </html>

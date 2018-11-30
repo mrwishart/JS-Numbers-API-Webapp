@@ -1,0 +1,39 @@
+html {
+  overflow: hidden;
+  position: fixed;
+}
+
+
+body {
+  position: fixed;
+  margin: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: #e2d0b9;
+  border: 0px;
+  padding: 0px;
+}
+
+
+
+#header-view h1 {
+  margin: 0px;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.monitor-container {
+  border-radius: 75px;
+  border: 25px solid black;
+  position: relative;
+  margin: 50px;
+  padding: 40px;
+  background-color: black;
+  color: lime;
+  font-family: monospace;
+}
+
+.monitor-container, .cover {
+  width: calc(100% - 230px);
+  height: calc(100% - 230px);
+}
