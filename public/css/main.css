@@ -1,25 +1,33 @@
 html {
   overflow: hidden;
   position: fixed;
+  background-color: white;
+  max-width: 937px;
+  max-height: 667px;
 }
 
 
 body {
   position: fixed;
   margin: 0px;
-  width: 100%;
-  height: 100%;
+  width: 710px;
+  height: 530px;
   background-color: #e2d0b9;
   border: 0px;
   padding: 0px;
 }
 
-
+#header-view {
+  padding: 0px 0px 15px;
+  border-top: 1px dashed;
+}
 
 #header-view h1 {
-  margin: 0px;
-  font-size: 14px;
+  text-align: center;
+  margin: 0px 0px 5px;
+  font-size: 100%;
   font-weight: normal;
+
 }
 
 .monitor-container {
@@ -27,13 +35,34 @@ body {
   border: 25px solid black;
   position: relative;
   margin: 50px;
-  padding: 40px;
+  padding: 10px 40px;
   background-color: black;
   color: lime;
   font-family: monospace;
+  overflow: hidden;
 }
 
-.monitor-container, .cover {
+.monitor-container {
   width: calc(100% - 230px);
-  height: calc(100% - 230px);
+  height: calc(100% - 170px);
+}
+
+#output-view {
+  overflow: hidden;
+  height: inherit;
+}
+
+#output-view p {
+margin: 0px;
+border-bottom: 0px;
+border-top: 1px;
+border-left: 0px;
+border-right: 0px;
+border-style: dashed;
+padding: 1em;
+}
+
+#select-view {
+  padding: 10px 0px;
+  border-top: 1px dashed;
 }

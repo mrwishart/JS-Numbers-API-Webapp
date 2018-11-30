@@ -10,7 +10,12 @@ OutputView.prototype.bindEvents = function () {
     const numberInfoElement = document.createElement('p');
     numberInfoElement.textContent = numberInfo;
 
-    this.element.appendChild(numberInfoElement);
+    if (this.element.firstChild){
+    const lastQuery = this.element.firstChild;
+    this.element.insertBefore(numberInfoElement, lastQuery);}
+    else {
+      this.element.appendChild(numberInfoElement);
+    }
   });
 };
 

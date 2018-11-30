@@ -1,9 +1,14 @@
-const NumberInfo = require('./models/number_info.js')
-const OutputView = require('./views/output_view.js')
-const SelectView = require('./views/select_view.js')
+const NumberInfo = require('./models/number_info.js');
+const OutputView = require('./views/output_view.js');
+const SelectView = require('./views/select_view.js');
+const HeaderView = require('./views/header_view.js');
 
 const startApp = () => {
   console.log("Javascript Loaded!");
+
+  const headerElement = document.querySelector('#header-view');
+  const headerView = new HeaderView(headerElement);
+  headerView.bindEvents();
 
   const selectButton = document.querySelector('#select-form')
   const selectView = new SelectView(selectButton);
