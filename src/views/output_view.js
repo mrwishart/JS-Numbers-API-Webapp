@@ -6,21 +6,15 @@ const OutputView = function (element) {
 
 OutputView.prototype.bindEvents = function () {
   PubSub.subscribe("OutputView:NewInfoToAdd", (event) => {
-    const numberInfo = event.detail;
-    const numberInfoElement = document.createElement('p');
-    const queryNumber = this.element.childElementCount;
-    numberInfoElement.textContent = `[query${queryNumber}]: ${numberInfo}`;
-    numberInfoElement.id = queryNumber;
 
-    if (this.element.firstChild){
-      const lastQuery = this.element.firstChild;
-      this.element.insertBefore(numberInfoElement, lastQuery);}
-    else {
-      this.element.appendChild(numberInfoElement);
-    }
+    const numberInfo = event.detail;
+    const numberInfoElement = this.createNewQElement(numberInfo);
+
+    const lastQuery = this.element.firstChild;
+    this.element.insertBefore(numberInfoElement, lastQuery);
 
     numberInfoElement.addEventListener('mouseover', () => {
-      PubSub.publish("SystemView:UpdateMessage", queryNumber);
+      PubSub.publish("SystemView:UpdateMessage", numberInfoElement.id);
     })
   });
 
@@ -28,6 +22,16 @@ OutputView.prototype.bindEvents = function () {
     this.element.innerHTML = '';
     PubSub.publish("NumberInfo:NeedToQueryAPI", 'random');
   })
+};
+
+OutputView.prototype.createNewQElement = function (info) {
+
+  const numberInfoElement = document.createElement('p');
+  const queryNumber = this.element.childElementCount;
+  numberInfoElement.textContent = `[query${queryNumber}]: ${info}`;
+  numberInfoElement.id = queryNumber;
+  return numberInfoElement;
+
 };
 
 module.exports = OutputView;

@@ -58,28 +58,41 @@ ButtonView.prototype.disableButton = function (timing) {
 };
 
 ButtonView.prototype.changePower = function () {
-  const click = this.power ? '#click-off' : '#click-on';
-  const clickSound = document.querySelector(click);
-  clickSound.play();
 
-  const switchCover = {
-    'cover-on': 'cover-off',
-    'cover-off': 'cover-on'
-  };
+  this.playClickSound();
 
-  const coverClass = this.power ? 'cover-on' : 'cover-off';
-  console.log(coverClass);
-  const screenCover = document.getElementsByClassName(coverClass)[0];
-  screenCover.classList.replace(coverClass, switchCover[coverClass]);
+  const currentClass = this.coverClass(this.power);
+  const newClass = this.coverClass(!this.power);
 
-  if (this.power) {
-    PubSub.publish("OutputView:ResetQueryList", true);
-  } else {
-    PubSub.publish("SystemView:UpdateMessage", 'loading');
-  }
+  const screenCover = document.getElementsByClassName(currentClass)[0];
+  screenCover.classList.replace(currentClass, newClass);
 
   this.power = !this.power;
+
+  this.powerChangeMessages();
 };
 
+ButtonView.prototype.coverClass = function (check) {
+  return check ? 'cover-on' : 'cover-off';
+};
+
+ButtonView.prototype.playClickSound = function () {
+  document.querySelector(this.correctSound()).play();
+};
+
+ButtonView.prototype.correctSound = function () {
+  return this.power ? '#click-off' : '#click-on';
+};
+
+ButtonView.prototype.powerChangeMessages = function () {
+
+  PubSub.publish("SelectView:PowerChange", this.power);
+  
+  if (this.power) {
+    PubSub.publish("SystemView:UpdateMessage", 'loading');
+  } else {
+    PubSub.publish("OutputView:ResetQueryList");
+  }
+}
 
 module.exports = ButtonView;

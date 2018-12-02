@@ -3,13 +3,14 @@ const PubSub = require('../helpers/pub_sub.js');
 const SelectView = function (container, element) {
   this.container = container;
   this.element = element;
+  this.power = false;
 }
 
 SelectView.prototype.bindEvents = function () {
   document.addEventListener('keydown', (event) => {
 
     const enteredChar = event.key;
-    this.processKey(enteredChar);
+    if(this.power) {this.processKey(enteredChar)};
   });
 
   document.addEventListener('paste', (event) => {
@@ -28,6 +29,11 @@ SelectView.prototype.bindEvents = function () {
   PubSub.subscribe("SelectView:FlickerTimer", () => {
     this.switchFlicker();
   });
+
+  PubSub.subscribe("SelectView:PowerChange", (event) => {
+    this.power = event.detail;
+    this.clearInput();
+  })
 
   this.runFlicker();
 };
@@ -53,20 +59,30 @@ SelectView.prototype.runFlicker = function () {
 
 
 SelectView.prototype.processKey = function (char) {
+
+  let rightSound;
+
   if (char === "Enter") {
     PubSub.publish( "NumberInfo:NeedToQueryAPI",this.element.textContent);
-    this.playTypeSound('#return');
-    this.element.textContent = '';
+    this.clearInput();
+    rightSound = '#return';
   } else if (char === "Backspace") {
     this.element.textContent = this.backspace();
-    this.playTypeSound('#keystroke');
+    rightSound = '#keystroke';
   } else if (!isNaN(char)) {
     this.element.textContent += char;
-    this.playTypeSound('#keystroke');
+    rightSound = '#keystroke';
   } else {
     PubSub.publish("SystemView:UpdateMessage", 'non-number-entered');
+    rightSound = '#error';
   }
+
+  this.playTypeSound(rightSound);
 };
+
+SelectView.prototype.clearInput = function () {
+  this.element.textContent = '';
+}
 
 SelectView.prototype.processPaste = function (text) {
   let result = 'paste-unsuccessful';
