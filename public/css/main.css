@@ -48,14 +48,31 @@ body {
   height: calc(100% - 170px);
 }
 
-.cover {
+.cover-on, .cover-off {
   position: fixed;
+  overflow: hidden;
+  width: 480px;
+  height: 380px;
+}
+
+.cover-on {
   background-color: lime;
   z-index: -1;
   opacity: 0.1;
-  overflow: hidden;
-  width: 480px;
-  height: 360px;
+  animation: power-on 3s;
+}
+
+.cover-off {
+  background-color: black;
+  z-index: 100;
+  opacity: 1;
+}
+
+@keyframes power-on {
+    from {opacity: 1;
+    z-index: 100;}
+    to {opacity: 0.1;
+    z-index: -1;}
 }
 
 #output-view {
@@ -89,12 +106,17 @@ padding: 1em;
   padding-right: 0.2em;
 }
 
-#system-view p {
+#system-view {
   color: crimson;
   font-weight: bold;
   margin: 3px 0px;
   text-align: center;
   font-size: large;
+}
+
+#system-view p {
+  margin: 0px;
+  display: inline;
 }
 
 .on {
