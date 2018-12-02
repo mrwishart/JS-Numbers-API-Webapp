@@ -10,6 +10,7 @@ OutputView.prototype.bindEvents = function () {
     const numberInfoElement = document.createElement('p');
     const queryNumber = this.element.childElementCount;
     numberInfoElement.textContent = `[query${queryNumber}]: ${numberInfo}`;
+    numberInfoElement.id = queryNumber;
 
     if (this.element.firstChild){
       const lastQuery = this.element.firstChild;
@@ -17,7 +18,16 @@ OutputView.prototype.bindEvents = function () {
     else {
       this.element.appendChild(numberInfoElement);
     }
+
+    numberInfoElement.addEventListener('mouseover', () => {
+      PubSub.publish("SystemView:UpdateMessage", queryNumber);
+    })
   });
+
+  PubSub.subscribe("OutputView:ResetQueryList", () => {
+    this.element.innerHTML = '';
+    PubSub.publish("NumberInfo:NeedToQueryAPI", 'random');
+  })
 };
 
 module.exports = OutputView;

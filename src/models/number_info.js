@@ -17,9 +17,12 @@ NumberInfo.prototype.getInfo = (event) => {
 
   const url = `http://numbersapi.com/${numberRequest}/math`
   const request = new RequestHelper(url);
-  request.get().then((numberInfo) => {
+  request.get()
+    .then((numberInfo) => {
     PubSub.publish("OutputView:NewInfoToAdd",numberInfo);
-  });
+    PubSub.publish("SystemView:UpdateMessage", 'query-complete');
+  })
+  .catch(PubSub.publish("SystemView:UpdateMessage", "query-failed"));
 }
 
 module.exports = NumberInfo;

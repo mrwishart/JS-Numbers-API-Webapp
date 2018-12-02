@@ -1,7 +1,8 @@
 const PubSub = require('../helpers/pub_sub.js');
 
-const SelectView = function (container) {
+const SelectView = function (container, element) {
   this.container = container;
+  this.element = element;
 }
 
 SelectView.prototype.bindEvents = function () {
@@ -16,38 +17,66 @@ SelectView.prototype.bindEvents = function () {
     this.processPaste(pastedText);
   })
 
-  const switchFlicker = function () {
-    const switchObject = {off: 'on', on: 'off'};
-    const flicker = document.querySelector('#flicker');
+  this.container.addEventListener('mouseover', () => {
+    PubSub.publish("SystemView:UpdateMessage", 'input-hover');
+  })
 
-    const oldClass = flicker.classList.value;
-    const newClass = switchObject[oldClass];
+  this.container.addEventListener('click', () => {
+    PubSub.publish("SystemView:UpdateMessage", 'input-click');
+  })
 
-    flicker.classList.remove(oldClass);
-    flicker.classList.add(newClass);
+  PubSub.subscribe("SelectView:FlickerTimer", () => {
+    this.switchFlicker();
+  });
 
-    window.setTimeout(switchFlicker, 500);
-
-  };
-
-  window.setTimeout(switchFlicker, 500);
+  this.runFlicker();
 };
+
+SelectView.prototype.switchFlicker = function () {
+
+  const switchObject = {off: 'on', on: 'off'};
+
+  const flicker = document.querySelector('#flicker');
+
+  const oldClass = flicker.classList.value;
+  const newClass = switchObject[oldClass];
+
+  flicker.classList.remove(oldClass);
+  flicker.classList.add(newClass);
+
+  window.setTimeout(this.runFlicker, 500);
+};
+
+SelectView.prototype.runFlicker = function () {
+  PubSub.publish("SelectView:FlickerTimer");
+};
+
 
 SelectView.prototype.processKey = function (char) {
   if (char === "Enter") {
-    PubSub.publish( "NumberInfo:NeedToQueryAPI",this.container.textContent);
-    this.container.textContent = '';
+    PubSub.publish( "NumberInfo:NeedToQueryAPI",this.element.textContent);
+    this.playTypeSound('#return');
+    this.element.textContent = '';
   } else if (char === "Backspace") {
-    this.container.textContent = this.backspace();
+    this.element.textContent = this.backspace();
+    this.playTypeSound('#keystroke');
   } else if (!isNaN(char)) {
-    this.container.textContent += char;
+    this.element.textContent += char;
+    this.playTypeSound('#keystroke');
   } else {
-    return;
+    PubSub.publish("SystemView:UpdateMessage", 'non-number-entered');
   }
 };
 
 SelectView.prototype.processPaste = function (text) {
-  if (this.isAllDigits(text)) {this.container.textContent += text};
+  let result = 'paste-unsuccessful';
+
+  if (this.isAllDigits(text)) {
+    this.element.textContent += text;
+    result = 'paste-successful';
+  }
+
+  PubSub.publish("SystemView:UpdateMessage", result);
 };
 
 SelectView.prototype.isAllDigits = function (textArray) {
@@ -55,23 +84,14 @@ SelectView.prototype.isAllDigits = function (textArray) {
 };
 
 SelectView.prototype.backspace = function () {
-  return this.container.textContent.slice(0, -1);
+  return this.element.textContent.slice(0, -1);
 };
 
-// SelectView.prototype.switchFlicker = function () {
-//
-//   const switchObject = {off: 'on', on: 'off'};
-//
-//   const flicker = document.querySelector('#flicker');
-//
-//   const oldClass = flicker.classList.value;
-//   const newClass = switchObject[oldClass];
-//
-//   flicker.classList.remove(oldClass);
-//   flicker.classList.add(newClass);
-//
-//   console.log(this);
-//   window.setTimeout(switchFlicker, 500);
-// };
+SelectView.prototype.playTypeSound = function (audioID) {
+  const keySound = document.querySelector(audioID);
+  keySound.volume = 0.5;
+  keySound.play();
+};
+
 
 module.exports = SelectView;
