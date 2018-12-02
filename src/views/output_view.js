@@ -15,7 +15,11 @@ OutputView.prototype.bindEvents = function () {
 
     numberInfoElement.addEventListener('mouseover', () => {
       PubSub.publish("SystemView:UpdateMessage", numberInfoElement.id);
-    })
+    });
+
+    numberInfoElement.addEventListener('click', () => {
+      PubSub.publish("SystemView:UpdateMessage", 'query-click');
+    });
   });
 
   PubSub.subscribe("OutputView:ResetQueryList", () => {

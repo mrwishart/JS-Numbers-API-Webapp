@@ -15,6 +15,7 @@ ButtonView.prototype.bindEvents = function () {
   })
 
   PubSub.subscribe('ButtonView:EnableButton', () => {
+    PubSub.publish("SelectView:PowerChange", true);
     this.setButton();
   })
 
@@ -86,12 +87,11 @@ ButtonView.prototype.correctSound = function () {
 
 ButtonView.prototype.powerChangeMessages = function () {
 
-  PubSub.publish("SelectView:PowerChange", this.power);
-  
   if (this.power) {
     PubSub.publish("SystemView:UpdateMessage", 'loading');
   } else {
     PubSub.publish("OutputView:ResetQueryList");
+    PubSub.publish("SelectView:PowerChange", false);
   }
 }
 

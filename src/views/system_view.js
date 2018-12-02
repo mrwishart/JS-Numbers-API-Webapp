@@ -6,6 +6,7 @@ const SystemView = function (element) {
     'loading': "Program loading...",
     'query-complete': "Query completed",
     'query-failed': "Query processing.....",
+    'query-click': "Keyboard only, human!",
     'non-number-entered': "You know what a number is?",
     'input-hover': "Input number here, human",
     'input-click': "Use the keyboard, meatbag",
