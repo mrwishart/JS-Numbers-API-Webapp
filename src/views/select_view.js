@@ -11,6 +11,11 @@ SelectView.prototype.bindEvents = function () {
     this.processKey(enteredChar);
   });
 
+  document.addEventListener('paste', (event) => {
+    const pastedText = event.clipboardData.getData('text');
+    this.processPaste(pastedText);
+  })
+
   const switchFlicker = function () {
     const switchObject = {off: 'on', on: 'off'};
     const flicker = document.querySelector('#flicker');
@@ -39,6 +44,14 @@ SelectView.prototype.processKey = function (char) {
   } else {
     return;
   }
+};
+
+SelectView.prototype.processPaste = function (text) {
+  if (this.isAllDigits(text)) {this.container.textContent += text};
+};
+
+SelectView.prototype.isAllDigits = function (textArray) {
+  return textArray.split('').every(char => !isNaN(char));
 };
 
 SelectView.prototype.backspace = function () {

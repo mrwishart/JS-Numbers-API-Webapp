@@ -4,21 +4,28 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/main.css">
   <script src="js/bundle.js"></script>
+  <audio id="click-on">
+  <source src="audio/click-on.wav" type="audio/wav">
+  </audio>
+  <audio id="click-off">
+    <source src="audio/click-off.wav" type="audio/wav">
+  </audio>
   <title>num.isFun?() === true;</title>
 </head>
 <body>
   <div class="monitor-container">
     <div class="cover"></div>
-    <div id="system-view"></div>
+    <div id="system-view"><p>System Status:</p></div>
     <header id="header-view"></header>
     <nav id="select-view">
     <div id="select-form">
       <p>Pick a Number: </p><h4 id="select-text"></h4><h3 id='flicker' class='on'>_</h3>
-      <!-- <input type="number" id="select-input"min=0>
-      <input type="submit" name="" value="Submit"> -->
     </div>
     </nav>
     <section id="output-view"></section>
+  </div>
+  <div class="button-container">
+  <div class="power-button-off">&ovbar;</div>
   </div>
 </body>
 </html>

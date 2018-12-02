@@ -8,11 +8,12 @@ OutputView.prototype.bindEvents = function () {
   PubSub.subscribe("OutputView:NewInfoToAdd", (event) => {
     const numberInfo = event.detail;
     const numberInfoElement = document.createElement('p');
-    numberInfoElement.textContent = numberInfo;
+    const queryNumber = this.element.childElementCount;
+    numberInfoElement.textContent = `[query${queryNumber}]: ${numberInfo}`;
 
     if (this.element.firstChild){
-    const lastQuery = this.element.firstChild;
-    this.element.insertBefore(numberInfoElement, lastQuery);}
+      const lastQuery = this.element.firstChild;
+      this.element.insertBefore(numberInfoElement, lastQuery);}
     else {
       this.element.appendChild(numberInfoElement);
     }
