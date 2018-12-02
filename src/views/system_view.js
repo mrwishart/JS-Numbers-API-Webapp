@@ -5,7 +5,8 @@ const SystemView = function (element) {
   this.messages = {
     'loading': "Program loading...",
     'query-complete': "Query completed",
-    'query-failed': "Query processing.....",
+    'query-processing': "Query processing.....",
+    'query-failed': "Query failed: API issues",
     'query-click': "Keyboard only, human!",
     'non-number-entered': "You know what a number is?",
     'input-hover': "Input number here, human",

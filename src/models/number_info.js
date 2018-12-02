@@ -22,7 +22,7 @@ NumberInfo.prototype.getInfo = (event) => {
     PubSub.publish("OutputView:NewInfoToAdd",numberInfo);
     PubSub.publish("SystemView:UpdateMessage", 'query-complete');
   })
-  .catch(PubSub.publish("SystemView:UpdateMessage", "query-failed"));
+  .catch(PubSub.publish("SystemView:UpdateMessage", "query-processing"));
 }
 
 module.exports = NumberInfo;
