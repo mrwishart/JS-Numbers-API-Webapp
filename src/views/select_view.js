@@ -15,7 +15,7 @@ SelectView.prototype.bindEvents = function () {
 
   document.addEventListener('paste', (event) => {
     const pastedText = event.clipboardData.getData('text');
-    this.processPaste(pastedText);
+    if(this.power) {this.processPaste(pastedText)};
   })
 
   this.container.addEventListener('mouseover', () => {
