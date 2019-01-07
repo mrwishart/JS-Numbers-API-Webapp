@@ -4,6 +4,10 @@ Week 7 Homework at Codeclan. An App that allows the user to query the Numbers AP
 
 Download the project and open index.html to run
 
+### Screenshot
+
+![alt text](images/img.png)
+
 Original brief:
 
 ### Learning Objectives
