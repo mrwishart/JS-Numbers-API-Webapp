@@ -2,7 +2,7 @@
 
 Week 7 Homework at Codeclan. An App that allows the user to query the Numbers API (http://numbersapi.com/) for information.
 
-Download the project and open index.html to run
+The app can be accessed here: http://numbers-are-fun.herokuapp.com/
 
 ![Screenshot](images/screenshot.png)
 
